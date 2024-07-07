@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,4 +61,52 @@ public class CRUDEmployeeService {
         }
         return response;
     }
+
+    public GlobalResponse updateEmployee(Long id, EmployeeDTO body) {
+        GlobalResponse response = new GlobalResponse();
+        try {
+            Optional<Employee> employeeOptional = repo.findById(id);
+            if (employeeOptional.isPresent()) {
+                Employee employee = employeeOptional.get();
+                employee.setName(body.getNamaKaryawan());
+                employee.setFunction(body.getTitelPekerjaan());
+                employee.setEmployeeid(body.getNikKaryawan());
+                repo.save(employee);
+                response.setStatus("success");
+                response.setDescription("employee data updated successfully");
+                response.setDetails(employee);
+            } else {
+                response.setStatus("error");
+                response.setDescription("employee not found with id: " + id);
+            }
+        } catch (Exception e) {
+            response.setStatus("error");
+            response.setDescription("Error while updating employee data");
+            response.setDetails(e);
+        }
+        return response;
+    }
+    
+
+    public GlobalResponse deleteEmployee(Long id) {
+        GlobalResponse response = new GlobalResponse();
+        try {
+            Optional<Employee> employeeOptional = repo.findById(id);
+            if (employeeOptional.isPresent()) {
+                repo.deleteById(id);
+                response.setStatus("success");
+                response.setDescription("employee deleted successfully");
+            } else {
+                response.setStatus("error");
+                response.setDescription("employee not found with id: " + id);
+            }
+        } catch (Exception e) {
+            response.setStatus("error");
+            response.setDescription("Error while deleting employee data");
+            response.setDetails(e);
+        }
+        return response;
+    }
+    
+    
 }
