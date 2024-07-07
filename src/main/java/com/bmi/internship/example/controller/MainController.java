@@ -62,8 +62,8 @@ public class MainController {
 }
 
 
-@PostMapping("/delete/{id}")
-public GlobalResponse hapusPegawai(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public GlobalResponse hapusPegawai(@PathVariable Long id) {
     GlobalResponse response = new GlobalResponse();
     try {
         response = crudEmployeeService.deleteEmployee(id);
