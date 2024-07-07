@@ -11,4 +11,5 @@ public class EmployeeDTO {
     public String namaKaryawan;
     public String nikKaryawan;
     public String titelPekerjaan;
+    private String functionunitId;
 }

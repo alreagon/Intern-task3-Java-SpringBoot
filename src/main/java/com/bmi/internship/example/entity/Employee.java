@@ -1,17 +1,7 @@
 package com.bmi.internship.example.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Data
 @Setter
@@ -19,16 +9,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "employeedib")
+@Table(name = "employee")
 public class Employee extends BaseEntity {
     @Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_employee")
-	@SequenceGenerator(sequenceName = "sq_employee", allocationSize = 1, name = "sq_employee")
-	@Column(name = "id")
-	public Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_employee")
+    @SequenceGenerator(sequenceName = "sq_employee", allocationSize = 1, name = "sq_employee")
+    @Column(name = "id")
+    private Long id;
 
-    public String name;
-    public String employeeid;
-    public String function;
-    public String unit;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "employeeid", nullable = false)
+    private String employeeid;
+
+    @ManyToOne
+    @JoinColumn(name = "functionunit_id", nullable = false)
+    private Function functionunit;
 }

@@ -5,10 +5,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.bmi.internship.example.entity.Unit;
-import com.bmi.internship.example.repository.UnitRepo;
-import com.bmi.internship.example.repository.FunctionRepo;
 import com.bmi.internship.example.entity.Function;
+import com.bmi.internship.example.entity.Unit;
+import com.bmi.internship.example.repository.FunctionRepo;
+import com.bmi.internship.example.repository.UnitRepo;
 
 @SpringBootApplication
 public class ExampleApplication implements CommandLineRunner {
@@ -25,9 +25,8 @@ public class ExampleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        unitRepo.save(new Unit(1L, "DIB", "Digital Banking"));
-        unitRepo.save(new Unit(2L, "ITY", "IT"));
-
+        // unitRepo.save(new Unit(1L, "DIB", "Digital Banking"));
+        // unitRepo.save(new Unit(2L, "ITY", "IT"));
 
         functionRepo.save(new Function("DIB1", "Digital System Development"));
         functionRepo.save(new Function("DIB2", "Digital Business Partnership"));
@@ -36,6 +35,4 @@ public class ExampleApplication implements CommandLineRunner {
         functionRepo.save(new Function("ITY2", "Governance"));
         functionRepo.save(new Function("ITY3", "Infrastructure"));
     }
-
-    
 }

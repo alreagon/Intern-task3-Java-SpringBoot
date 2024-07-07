@@ -1,17 +1,11 @@
 package com.bmi.internship.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.bmi.internship.example.model.EmployeeDTO;
 import com.bmi.internship.example.model.GlobalResponse;
 import com.bmi.internship.example.service.CRUDEmployeeService;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping("/example/employee")
@@ -20,60 +14,22 @@ public class MainController {
     CRUDEmployeeService crudEmployeeService;
 
     @PostMapping("/create")
-    public GlobalResponse tambahPegawai(@RequestBody EmployeeDTO body) {
-        GlobalResponse response = new GlobalResponse();
-        try {
-            response = crudEmployeeService.createEmployee(body);
-        } catch (Exception e) {
-            response.setStatus("malfunction");
-            response.setDescription("something went wrong");
-            response.setDetails(e.getMessage());
-        }
-        
-        return response;
+    public GlobalResponse createEmployee(@RequestBody EmployeeDTO body) {
+        return crudEmployeeService.createEmployee(body);
     }
 
-    @PostMapping("/view")
-    public GlobalResponse lihatPegawai() {
-        GlobalResponse response = new GlobalResponse();
-        try {
-            response = crudEmployeeService.viewEmployee();
-        } catch (Exception e) {
-            response.setStatus("malfunction");
-            response.setDescription("something went wrong");
-            response.setDetails(e.getMessage());
-
-        }
-        
-        return response;
+    @GetMapping("/view")
+    public GlobalResponse viewEmployees() {
+        return crudEmployeeService.viewEmployees();
     }
 
     @PostMapping("/update/{id}")
-    public GlobalResponse ubahPegawai(@PathVariable Long id, @RequestBody EmployeeDTO body) {
-    GlobalResponse response = new GlobalResponse();
-    try {
-        response = crudEmployeeService.updateEmployee(id, body);
-    } catch (Exception e) {
-        response.setStatus("malfunction");
-        response.setDescription("something went wrong");
-        response.setDetails(e.getMessage());
+    public GlobalResponse updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO body) {
+        return crudEmployeeService.updateEmployee(id, body);
     }
-    return response;
-}
 
-
-    @PostMapping("/delete/{id}")
-    public GlobalResponse hapusPegawai(@PathVariable Long id) {
-    GlobalResponse response = new GlobalResponse();
-    try {
-        response = crudEmployeeService.deleteEmployee(id);
-    } catch (Exception e) {
-        response.setStatus("malfunction");
-        response.setDescription("something went wrong");
-        response.setDetails(e.getMessage());
+    @DeleteMapping("/delete/{id}")
+    public GlobalResponse deleteEmployee(@PathVariable Long id) {
+        return crudEmployeeService.deleteEmployee(id);
     }
-    return response;
-}
-
-
 }
