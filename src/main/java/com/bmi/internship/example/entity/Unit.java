@@ -22,4 +22,9 @@ public class Unit extends BaseEntity {
 
     @Column(name = "unit", nullable = false)
     private String unit;
+
+    public Unit(String abbreviation, String unit) {
+        this.abbreviation = abbreviation;
+        this.unit = unit;
+    }
 }
