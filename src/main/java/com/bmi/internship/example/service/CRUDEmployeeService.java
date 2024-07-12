@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bmi.internship.example.entity.Employee;
 import com.bmi.internship.example.entity.Function;
+import com.bmi.internship.example.entity.Unit;
 import com.bmi.internship.example.model.EmployeeDTO;
 import com.bmi.internship.example.model.GlobalResponse;
 import com.bmi.internship.example.repository.EmployeeRepo;
@@ -129,6 +130,6 @@ public class CRUDEmployeeService {
 
     private boolean validateFunctionUnitRelation(Function function) {
         String unitAbbreviation = function.getId().substring(0, 3);
-        return (unitAbbreviation.equals("DIB") || unitAbbreviation.equals("ITY"));
+        return function.getUnit().getAbbreviation().equals(unitAbbreviation);
     }
 }
