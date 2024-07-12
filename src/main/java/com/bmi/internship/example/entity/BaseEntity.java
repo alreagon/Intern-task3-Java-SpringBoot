@@ -2,7 +2,6 @@ package com.bmi.internship.example.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ import lombok.Setter;
 public abstract class BaseEntity implements Serializable {
 
     @Version
-    private long version;
+    private Long version;
     private Timestamp created;
     private Timestamp updated;
     private Timestamp deleted;
