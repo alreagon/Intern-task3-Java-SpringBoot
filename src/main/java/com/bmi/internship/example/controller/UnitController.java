@@ -1,9 +1,12 @@
 package com.bmi.internship.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.bmi.internship.example.model.UnitDTO;
+import com.bmi.internship.example.entity.Unit;
 import com.bmi.internship.example.model.GlobalResponse;
 import com.bmi.internship.example.service.CRUDUnitService;
 
@@ -31,5 +34,15 @@ public class UnitController {
     @DeleteMapping("/delete/{id}")
     public GlobalResponse deleteUnit(@PathVariable Long id) {
         return crudUnitService.deleteUnit(id);
+    }
+    
+    @DeleteMapping("/deleteAll")
+    public GlobalResponse deleteAllUnits() {
+        return crudUnitService.deleteAllUnits();
+    }
+
+    @GetMapping("/viewAll")
+    public List<Unit> viewAllUnits() {
+        return crudUnitService.findAllUnits();
     }
 }
