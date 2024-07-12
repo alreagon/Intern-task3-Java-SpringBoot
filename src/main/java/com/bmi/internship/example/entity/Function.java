@@ -1,3 +1,4 @@
+// File: src/main/java/com/bmi/internship/example/entity/Function.java
 package com.bmi.internship.example.entity;
 
 import jakarta.persistence.*;
@@ -17,4 +18,19 @@ public class Function extends BaseEntity {
 
     @Column(name = "function", nullable = false)
     private String function;
+
+    @ManyToOne
+    @JoinColumn(name = "unit_id", nullable = false)
+    private Unit unit;
+
+    public Function(String id, String function) {
+        this.id = id;
+        this.function = function;
+    }
+
+    // public Function(String id, String function, Unit unit) {
+    //     this.id = id;
+    //     this.function = function;
+    //     this.unit = unit;
+    // }
 }
