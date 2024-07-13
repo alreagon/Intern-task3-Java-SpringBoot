@@ -24,6 +24,6 @@ public class Employee extends BaseEntity {
     private String employeeid;
 
     @ManyToOne
-    @JoinColumn(name = "functionunit_id", nullable = false)
-    private Function functionunit;
+    @JoinColumn(name = "titel_pekerjaan", nullable = false)
+    private Function titelPekerjaan;
 }

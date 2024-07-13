@@ -1,8 +1,11 @@
 package com.bmi.internship.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.bmi.internship.example.entity.Function;
 import com.bmi.internship.example.model.FunctionDTO;
 import com.bmi.internship.example.model.GlobalResponse;
 import com.bmi.internship.example.service.CRUDFunctionService;
@@ -31,5 +34,15 @@ public class FunctionController {
     @DeleteMapping("/delete/{id}")
     public GlobalResponse deleteFunction(@PathVariable String id) {
         return crudFunctionService.deleteFunction(id);
+    }
+    
+    @DeleteMapping("/deleteAll")
+    public GlobalResponse deleteAllFunctions() {
+        return crudFunctionService.deleteAllFunctions();
+    }
+
+    @GetMapping("/viewAll")
+    public List<Function> viewAllFunctions() {
+        return crudFunctionService.findAllFunctions();
     }
 }

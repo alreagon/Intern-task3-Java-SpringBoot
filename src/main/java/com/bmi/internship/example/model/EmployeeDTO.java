@@ -1,15 +1,14 @@
 package com.bmi.internship.example.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Data
 @Setter
 @Getter
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDTO {
-    public String namaKaryawan;
-    public String nikKaryawan;
-    public String titelPekerjaan;
-    private String functionunitId;
+    private String namaKaryawan;
+    private String nikKaryawan;
+    private String titelPekerjaan; // Menggunakan String untuk mencari relasi
 }

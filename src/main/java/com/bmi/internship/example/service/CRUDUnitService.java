@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bmi.internship.example.entity.Unit;
 import com.bmi.internship.example.model.UnitDTO;
 import com.bmi.internship.example.model.GlobalResponse;
+import com.bmi.internship.example.repository.FunctionRepo;
 import com.bmi.internship.example.repository.UnitRepo;
 
 import jakarta.persistence.EntityManager;
@@ -25,6 +26,9 @@ public class CRUDUnitService {
 
     @Autowired
     private UnitRepo unitRepo;
+    
+    @Autowired
+    private FunctionRepo functionRepo;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -112,16 +116,25 @@ public class CRUDUnitService {
     public GlobalResponse deleteAllUnits() {
         GlobalResponse response = new GlobalResponse();
         try {
+            // Hapus semua entri di tabel Function terlebih dahulu
+            functionRepo.deleteAll();
+            // Reset sequence ID untuk tabel Function
+            Query resetFunctionSequence = entityManager.createNativeQuery("ALTER SEQUENCE sq_function RESTART WITH 1");
+            resetFunctionSequence.executeUpdate();
+
+            // Hapus semua entri di tabel Unit
             unitRepo.deleteAll();
-            // Reset the sequence for the Unit ID
-            Query query = entityManager.createNativeQuery("ALTER SEQUENCE sq_unit RESTART WITH 1");
-            query.executeUpdate();
+            // Reset sequence ID untuk tabel Unit
+            Query resetUnitSequence = entityManager.createNativeQuery("ALTER SEQUENCE sq_unit RESTART WITH 1");
+            resetUnitSequence.executeUpdate();
+
             response.setStatus("success");
-            response.setDescription("All units deleted and sequence reset successfully");
+            response.setDescription("All units and functions deleted and sequences reset successfully");
         } catch (Exception e) {
             response.setStatus("error");
-            response.setDescription("Error while deleting all units");
-            response.setDetails(e);
+            response.setDescription("Error while deleting all units and functions and resetting sequences");
+            response.setDetails(e.getMessage());
+            throw new RuntimeException(e);
         }
         return response;
     }

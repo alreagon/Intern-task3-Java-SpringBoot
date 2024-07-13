@@ -16,6 +16,11 @@ import com.bmi.internship.example.model.GlobalResponse;
 import com.bmi.internship.example.repository.FunctionRepo;
 import com.bmi.internship.example.repository.UnitRepo;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+
+
 @Service
 public class CRUDFunctionService {
     @Autowired
@@ -23,6 +28,9 @@ public class CRUDFunctionService {
 
     @Autowired
     UnitRepo unitRepo;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Transactional
     public GlobalResponse createFunction(FunctionDTO body) {
@@ -131,10 +139,40 @@ public class CRUDFunctionService {
 
     private Unit determineUnit(String functionId) {
         if (functionId.startsWith("DIB")) {
-            return unitRepo.findByAbbreviation("DIB").orElse(null);
+            return unitRepo.findByAbbreviation("DIB")
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
         } else if (functionId.startsWith("ITY")) {
-            return unitRepo.findByAbbreviation("ITY").orElse(null);
+            return unitRepo.findByAbbreviation("ITY")
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
         }
         return null;
+    }
+
+    @Transactional
+    public GlobalResponse deleteAllFunctions() {
+        GlobalResponse response = new GlobalResponse();
+        try {
+            functionRepo.deleteAll();
+            // Reset sequence ID untuk PostgreSQL
+            Query query = entityManager.createNativeQuery("ALTER SEQUENCE sq_function RESTART WITH 1");
+            query.executeUpdate();
+
+            response.setStatus("success");
+            response.setDescription("All functions deleted and sequence reset successfully");
+        } catch (Exception e) {
+            response.setStatus("error");
+            response.setDescription("Error while deleting all functions and resetting sequence");
+            response.setDetails(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return response;
+    }
+
+    public List<Function> findAllFunctions() {
+        return functionRepo.findAll();
     }
 }

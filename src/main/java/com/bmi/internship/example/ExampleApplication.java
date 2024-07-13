@@ -25,14 +25,16 @@ public class ExampleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // unitRepo.save(new Unit(1L, "DIB", "Digital Banking"));
-        // unitRepo.save(new Unit(2L, "ITY", "IT"));
+        // Unit unitDIB = new Unit("DIB", "Digital Banking");
+        // Unit unitITY = new Unit("ITY", "IT");
+        // unitRepo.save(unitDIB);
+        // unitRepo.save(unitITY);
 
-        functionRepo.save(new Function("DIB1", "Digital System Development"));
-        functionRepo.save(new Function("DIB2", "Digital Business Partnership"));
-        functionRepo.save(new Function("DIB3", "Digital Product & Project Management"));
-        functionRepo.save(new Function("ITY1", "Application Surrounding"));
-        functionRepo.save(new Function("ITY2", "Governance"));
-        functionRepo.save(new Function("ITY3", "Infrastructure"));
+        // functionRepo.save(new Function("DIB1", "Digital System Development", unitDIB));
+        // functionRepo.save(new Function("DIB2", "Digital Business Partnership", unitDIB));
+        // functionRepo.save(new Function("DIB3", "Digital Product & Project Management", unitDIB));
+        // functionRepo.save(new Function("ITY1", "Application Surrounding", unitITY));
+        // functionRepo.save(new Function("ITY2", "Governance", unitITY));
+        // functionRepo.save(new Function("ITY3", "Infrastructure", unitITY));
     }
 }
